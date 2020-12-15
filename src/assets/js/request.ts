@@ -44,6 +44,7 @@ const defaultConfig = {
 
 // **********************************************
 
+// 函数重载
 function useRequest<T>(
   url: string | ComputedRef<string>,
   config?: Partial<RequestConfig<T>>
@@ -55,19 +56,20 @@ function useRequest<T>(
   config?: Partial<RequestConfig<T>>
 ): ReturnResult<T>;
 
+// 重载函数的具体实现
 function useRequest<T>(...args: any[]): ReturnResult<T> {
   let _url: { value: string };
-  let _params: ComputedRef<RequestParams> | undefined;
-  let _config: Partial<RequestConfig<T>> = {};
+  let _params: ComputedRef<RequestParams> | undefined; // 可能没有
+  let _config: Partial<RequestConfig<T>> = {}; // 预置为空对象
 
-  if (args.length >= 1) {
+  if (args.length >= 1) { // 放置空参数调用函数
     _url = args[0].value ? args[0] : { value: args[0] };
   }
 
-  if (args.length > 2) {
+  if (args.length > 2) { // 同时包含参数和配置
     _params = args[1];
     _config = args[2];
-  } else {
+  } else { // 只有参数或配置
     if (args[1] && args[1].value) {
       _params = args[1];
     } else if (typeof args[1] === "object") {
