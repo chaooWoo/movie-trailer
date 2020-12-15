@@ -67,6 +67,7 @@ export default defineComponent({
     const { data: hotSearchKeys } = useRequest("/api/keyword");
 
     const params = computed(() => ({ keyword: state.keyword }));
+    // initialData初始数据，执行useRequest后，返回的data属性即为将请求的返回数据填充到initialData中
     const { data: movieList, fetch } = useRequest("/api/movie/search", params, {
       immediate: false,
       initialData: []
