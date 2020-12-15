@@ -57,9 +57,10 @@ function useRequest<T>(
 ): ReturnResult<T>;
 
 // 重载函数的具体实现
+// 可以根据重载函数的参数数量进行不同的实现
 function useRequest<T>(...args: any[]): ReturnResult<T> {
   let _url: { value: string };
-  let _params: ComputedRef<RequestParams> | undefined; // 可能没有
+  let _params: ComputedRef<RequestParams> | undefined; // 联合类型
   let _config: Partial<RequestConfig<T>> = {}; // 预置为空对象
 
   if (args.length >= 1) { // 放置空参数调用函数
@@ -149,6 +150,8 @@ function useRequest<T>(...args: any[]): ReturnResult<T> {
   });
 
   // 将请求状态，请求函数封装后返回
+  // 请求的函数fetch一同返回，可以让其他方法可以以相同的配置再次请求
+  // 例子：useScrollMore(加载更多)
   return { ...toRefs(state), fetch: fetchFunc };
 }
 
