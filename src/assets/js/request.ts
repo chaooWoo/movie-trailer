@@ -82,7 +82,7 @@ function useRequest<T>(...args: any[]): ReturnResult<T> {
 
   // es6语法，将combineConfig中的多个属性暴露
   const {
-    initialData, // ?
+    initialData, // 传入的初始值，一般为空值
     immediate,
     onSuccess,
     onFail,
@@ -93,7 +93,10 @@ function useRequest<T>(...args: any[]): ReturnResult<T> {
   const state: RequestState<T> = reactive({
     loading: false,
     error: false,
-    data: initialData // ?
+    // 传入的初始值，一般为空值，请求成功后将会被赋值为返回结果数据，
+    // 将响应对象state暴露后，外部可以直接访问该数据
+    // 目的(猜想)：满足不实现onSuccess或onFail，只想使用返回数据的场景
+    data: initialData
   }) as RequestState<T>;
 
   // 真实请求函数
@@ -170,4 +173,4 @@ instance.interceptors.response.use(
   }
 );
 
-export default instance;
+export default instance; // 将axios实例暴露，可以直接使用post、get等方法
