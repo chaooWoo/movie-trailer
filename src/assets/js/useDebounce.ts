@@ -16,3 +16,5 @@ export default function useDebounce(handler: () => void, time = 500) {
     timer.value = setTimeout(handler.bind(null, ...args), time);
   };
 }
+
+// https://zhuanlan.zhihu.com/p/86426949  知乎的一个实现，可以参考，也可以使用本来的实现
