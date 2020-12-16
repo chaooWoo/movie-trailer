@@ -46,12 +46,16 @@ class SearchCache {
   }
 
   addOne(query: string) {
+    // 将searchList展开为数组
     const list = [...this.searchList];
     const index = list.findIndex(s => s === query);
     if (index > -1) {
+      // 如果历史数据中有则将其删除
       list.splice(index, 1);
     }
+    // 添加到数组头部
     list.unshift(query);
+    // 大于最大保存数时将末尾的元素剔除
     if (list.length > SEARCH_MAX_LENGTH) {
       list.pop();
     }
@@ -60,6 +64,7 @@ class SearchCache {
   }
 
   removeOne(query: string) {
+    // 将和query不相同的元素筛选出来
     const list = this.searchList.filter(s => s !== query);
     return this.resetList(list);
   }
@@ -68,6 +73,7 @@ class SearchCache {
     return this.resetList([]);
   }
 
+  // 将重新整理过的list存入缓存，存入localStorage
   private resetList(list: string[]) {
     this.searchList = list;
     storage.set(SEARCH_KEY, list);
