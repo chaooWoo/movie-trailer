@@ -71,8 +71,10 @@ export default defineComponent({
       state,
       fetch
     );
+    // ts解构赋值，将rest.loading赋值给pullUpLoading
     const { loading: pullUpLoading, list: movieList } = rest;
 
+    // state.activeIdx发生变化是执行refresh()函数
     watch(toRef(state, "activeIdx"), refresh);
 
     const tabs = ["即将上映", "正在热映"];
