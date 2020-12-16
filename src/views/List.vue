@@ -66,6 +66,8 @@ export default defineComponent({
       initialData
     });
 
+    // 解构赋值refresh,loadMore，noMore(指定了参数名)
+    // 剩余返回的参数解构到rest变量中保存，供后面使用
     const { refresh, loadMore, noMore, ...rest } = useScrollMore(
       data,
       state,
