@@ -26,6 +26,7 @@ export default defineComponent({
     }
   },
   setup(props, { attrs, emit }) {
+    // attrs上下文对象，从上下文对象中获取modelValue转变为响应数据
     const inputValue = toRef(attrs, "modelValue");
 
     const handleClear = () => {
@@ -34,6 +35,8 @@ export default defineComponent({
       emit("clear");
     };
 
+    // 当输入框发生变化时，将输入框中的值拿出来，并触发'update:modelValue'和'change'两个事件
+    // 父元素选择哪个事件触发父元素自己的自定义函数，由父元素自行决定和处理
     const onChange = (e: Event) => {
       const value = (e.target as HTMLInputElement).value;
       emit("update:modelValue", value);
